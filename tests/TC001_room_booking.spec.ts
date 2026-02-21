@@ -25,6 +25,8 @@
 
 import { test, expect } from '@playwright/test';
 import { RoomDetailPage } from '../pages/RoomDetailPage';
+import * as fs from 'fs';
+import * as path from 'path';
 
 test.describe('TC001 – Szobafoglalás (Booking) | MAGAS prioritás', () => {
   test('TC001-01 – Sikeres szobafoglalás érvényes adatokkal', async ({ page }) => {
