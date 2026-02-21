@@ -1,4 +1,4 @@
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator } from "@playwright/test";
 
 export class AdminDashboardPage {
   readonly page: Page;
@@ -8,9 +8,15 @@ export class AdminDashboardPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.logoutButton = page.getByRole('button', { name: 'Logout' }).or(page.getByRole('link', { name: 'Logout' }));
-    this.roomsSection = page.locator('[data-testid="rooms"], .rooms-panel, text=Rooms').first();
-    this.bookingsSection = page.locator('[data-testid="bookings"], .bookings-panel, text=Bookings').first();
+    this.logoutButton = page
+      .getByRole("button", { name: "Logout" })
+      .or(page.getByRole("link", { name: "Logout" }));
+    this.roomsSection = page
+      .locator('[data-testid="rooms"], .rooms-panel, text=Rooms')
+      .first();
+    this.bookingsSection = page
+      .locator('[data-testid="bookings"], .bookings-panel, text=Bookings')
+      .first();
   }
 
   async isLoggedIn(): Promise<boolean> {

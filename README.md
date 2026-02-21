@@ -5,7 +5,18 @@
 ```bash
 npm install
 npx playwright install
+npm install dotenv --save-dev
 ```
+
+## Konfigurálás
+
+A `.env` fájlban állítsd be a `BASE_URL`-t:
+
+```env
+BASE_URL=https://automation.testathon.hu
+```
+
+A `playwright.config.ts` automatikusan betölti a `.env` fájlt a `dotenv` segítségével.
 
 ## Futtatás
 

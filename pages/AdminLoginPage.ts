@@ -1,4 +1,4 @@
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator } from "@playwright/test";
 
 export class AdminLoginPage {
   readonly page: Page;
@@ -11,12 +11,14 @@ export class AdminLoginPage {
     this.page = page;
     this.usernameInput = page.locator('input[placeholder="Enter username"]');
     this.passwordInput = page.locator('input[placeholder="Password"]');
-    this.loginButton = page.getByRole('button', { name: 'Login' });
-    this.errorMessage = page.locator('.alert, .error, [class*="error"], [class*="alert"]').first();
+    this.loginButton = page.getByRole("button", { name: "Login" });
+    this.errorMessage = page
+      .locator('.alert, .error, [class*="error"], [class*="alert"]')
+      .first();
   }
 
   async goto() {
-    await this.page.goto('/admin');
+    await this.page.goto("/admin");
   }
 
   async login(username: string, password: string) {
