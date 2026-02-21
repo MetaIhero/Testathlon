@@ -45,8 +45,8 @@ jobs:
         uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
-          name: testresult
-          path: testresult/
+          name: test-results-custom
+          path: test-results/
           retention-days: 30
           if-no-files-found: ignore
 

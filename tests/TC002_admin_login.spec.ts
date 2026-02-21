@@ -34,7 +34,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 test.describe('TC002 – Admin bejelentkezés (Authentication) | MAGAS prioritás', () => {
-  const testResultDir = path.resolve(__dirname, '..', 'testresult');
+  const testResultDir = path.resolve(__dirname, '..', 'test-results');
 
   test.afterEach(async ({ page }, testInfo) => {
     const testName = testInfo.title;

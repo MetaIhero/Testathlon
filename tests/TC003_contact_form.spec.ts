@@ -28,7 +28,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 test.describe('TC003 – Kapcsolatfelvételi Űrlap (Contact Form) | KÖZEPES prioritás', () => {
-  const testResultDir = path.resolve(__dirname, '..', 'testresult');
+  const testResultDir = path.resolve(__dirname, '..', 'test-results');
 
   test.afterEach(async ({ page }, testInfo) => {
     const testName = testInfo.title;
