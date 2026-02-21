@@ -1,0 +1,86 @@
+/**
+ * TC002 – Admin bejelentkezés
+ * Funkció: Admin autentikáció
+ * Prioritás: MAGAS
+ *
+ * Indoklás:
+ * Az adminisztrátori bejelentkezés kapu az összes backend-funkcióhoz
+ * (szobakezelés, foglalások megtekintése). Ha ez meghibásodik, az egész
+ * adminisztrációs felület elérhetetlenné válik. Kritikus biztonsági és
+ * működési kockázat; minden release-nél kötelező regresszió.
+ *
+ * Teszt neve       : TC002 – Admin sikeres és sikertelen bejelentkezés
+ * Rövid leírás     : Ellenőrizzük, hogy az admin felhasználó helyes
+ *                    hitelesítő adatokkal be tud lépni, rossz jelszóval
+ *                    viszont nem.
+ * Előfeltételek    : Az /admin oldal elérhető; ismert admin hitelesítők
+ *                    rendelkezésre állnak (admin/password).
+ * Teszt lépések    : Pozitív: 1. Nyisd meg az /admin oldalt
+ *                             2. Add meg a helyes felhasználónevet és jelszót
+ *                             3. Kattints a Login gombra
+ *                             4. Ellenőrizd, hogy a dashboard betölt
+ *                    Negatív: 1. Nyisd meg az /admin oldalt
+ *                             2. Add meg helytelen hitelesítőket
+ *                             3. Kattints a Login gombra
+ *                             4. Ellenőrizd a hibaüzenetet és hogy az URL /admin marad
+ * Várt eredmények  : Sikeres belépésnél dashboard jelenik meg; sikertelen
+ *                    belépésnél hibaüzenet, az /admin URL megmarad.
+ */
+
+import { test, expect } from '@playwright/test';
+import { AdminLoginPage } from '../pages/AdminLoginPage';
+import { AdminDashboardPage } from '../pages/AdminDashboardPage';
+
+test.describe('TC002 – Admin bejelentkezés (Authentication) | MAGAS prioritás', () => {
+  test('TC002-01 – Sikeres admin bejelentkezés érvényes hitelesítőkkel', async ({ page }) => {
+    const loginPage = new AdminLoginPage(page);
+    const dashboard = new AdminDashboardPage(page);
+
+    // 1. Navigálás az admin bejelentkezési oldalra
+    await loginPage.goto();
+    await expect(page).toHaveURL(/.*admin/);
+
+    // 2. Ellenőrzés: login form látható
+    await expect(loginPage.usernameInput).toBeVisible();
+    await expect(loginPage.passwordInput).toBeVisible();
+    await expect(loginPage.loginButton).toBeVisible();
+
+    // 3. Helyes hitelesítők megadása és login
+    await loginPage.login('admin', 'password');
+
+    // 4. Dashboard betölt – Logout gomb megjelenik
+    await expect(dashboard.logoutButton).toBeVisible({ timeout: 10000 });
+
+    // Az URL nem az /admin login oldal
+    await expect(page).not.toHaveURL(/.*admin$/);
+  });
+
+  test('TC002-02 – Sikertelen bejelentkezés helytelen jelszóval (negatív eset)', async ({ page }) => {
+    const loginPage = new AdminLoginPage(page);
+
+    // 1. Navigálás
+    await loginPage.goto();
+
+    // 2. Helytelen jelszó megadása
+    await loginPage.login('admin', 'wrongpassword123');
+
+    // 3. Az URL marad /admin
+    await expect(page).toHaveURL(/.*admin/);
+
+    // 4. Hibaüzenet vagy az input mezők újra láthatók (nem irányít át)
+    await expect(loginPage.usernameInput).toBeVisible({ timeout: 5000 });
+  });
+
+  test('TC002-03 – Sikertelen bejelentkezés üres mezőkkel', async ({ page }) => {
+    const loginPage = new AdminLoginPage(page);
+
+    await loginPage.goto();
+
+    // Login klikk üres mezőkkel
+    await loginPage.loginButton.click();
+
+    // Az oldal /admin marad, nem irányít át
+    await expect(page).toHaveURL(/.*admin/);
+    await expect(loginPage.loginButton).toBeVisible();
+  });
+});
