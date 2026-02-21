@@ -1,4 +1,4 @@
-# Shady Meadows B&B – Playwright POM Tesztek
+# Shady Meadows B&B – Playwright Tesztek
 
 ## Telepítés
 
