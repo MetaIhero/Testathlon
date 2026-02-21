@@ -1,0 +1,40 @@
+export interface AuthCredentials {
+  username: string;
+  password: string;
+}
+
+export interface Room {
+  roomid?: number;
+  roomName: string;
+  type: "Single" | "Double" | "Twin" | "Family" | "Suite";
+  accessible: boolean;
+  image: string;
+  description: string;
+  features: string[];
+  roomPrice: number;
+}
+
+export interface BookingDates {
+  checkin: string;
+  checkout: string;
+}
+
+export interface Booking {
+  bookingid?: number;
+  roomid: number;
+  firstname: string;
+  lastname: string;
+  depositpaid: boolean;
+  bookingdates: BookingDates;
+  email?: string;
+  phone?: string;
+}
+
+export interface Message {
+  messageid?: number;
+  name: string;
+  email: string;
+  phone: string;
+  subject: string;
+  description: string;
+}

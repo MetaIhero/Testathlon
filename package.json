@@ -3,17 +3,21 @@
   "version": "1.0.0",
   "description": "Playwright POM tesztek – Shady Meadows B&B (automation.testathon.hu)",
   "scripts": {
-    "test": "playwright test",
-    "test:headed": "playwright test --headed",
+    "test": "npx bddgen && playwright test",
+    "test:ui": "playwright test --project=chromium --project=firefox",
+    "test:api": "npx bddgen && playwright test --project=api-bdd",
+    "test:headed": "playwright test --headed --project=chromium",
     "test:report": "playwright show-report",
     "test:tc001": "playwright test tests/TC001_room_booking.spec.ts",
     "test:tc002": "playwright test tests/TC002_admin_login.spec.ts",
-    "test:tc003": "playwright test tests/TC003_contact_form.spec.ts"
+    "test:tc003": "playwright test tests/TC003_contact_form.spec.ts",
+    "bddgen": "npx bddgen"
   },
   "devDependencies": {
     "@playwright/test": "^1.42.0",
     "@types/node": "^20.0.0",
     "dotenv": "^17.3.1",
+    "playwright-bdd": "^7.0.0",
     "typescript": "^5.4.5"
   }
 }

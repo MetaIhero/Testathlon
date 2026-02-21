@@ -33,6 +33,9 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
+      - name: Generate BDD test files
+        run: npx bddgen
+
       - name: Run Playwright tests
         run: |
           if [ "${{ github.event.inputs.browser }}" = "all" ] || [ -z "${{ github.event.inputs.browser }}" ]; then

@@ -7,3 +7,6 @@ node_modules/
 /playwright/.cache/
 /playwright/.auth/
 .env
+
+# playwright-bdd generated test files
+.features-gen/
